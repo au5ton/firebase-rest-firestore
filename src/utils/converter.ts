@@ -87,11 +87,9 @@ export function convertFromFirestoreValue(
       }),
       {}
     );
-  } else if (
-    "arrayValue" in firestoreValue &&
-    firestoreValue.arrayValue.values
-  ) {
-    return firestoreValue.arrayValue.values.map(convertFromFirestoreValue);
+  } else if ("arrayValue" in firestoreValue) {
+    // The `values` field can be undefined, meaning that this is an empty array
+    return (firestoreValue.arrayValue.values ?? []).map(convertFromFirestoreValue);
   }
 
   return null;
